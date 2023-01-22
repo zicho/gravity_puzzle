@@ -32,26 +32,56 @@ public partial class Player : EntityBase
                 CamRotate(-90);
             }
 
-            if(Input.IsActionJustPressed("move_left")) {
-                Move(Vector2.Left);
+            if (Input.IsActionJustPressed("move_left"))
+            {
+                Move(GetGravityNeutralDirection(Vector2.Left));
             }
 
-            if(Input.IsActionJustPressed("move_right")) {
-                Move(Vector2.Right);
+            if (Input.IsActionJustPressed("move_right"))
+            {
+                Move(GetGravityNeutralDirection(Vector2.Right));
             }
         }
+    }
+
+    private Vector2 GetGravityNeutralDirection(Vector2 dir)
+    {
+        if (dir == Vector2.Left && ParentMap.Gravity != Vector2.Down)
+        {
+            if (ParentMap.Gravity == Vector2.Left) return dir.Rotated(Mathf.DegToRad(90));
+            else if (ParentMap.Gravity == Vector2.Up) return dir.Rotated(Mathf.DegToRad(180));
+            else if (ParentMap.Gravity == Vector2.Right) return dir.Rotated(Mathf.DegToRad(-90));
+        }
+
+        if (dir == Vector2.Right && ParentMap.Gravity != Vector2.Down) {
+            if (ParentMap.Gravity == Vector2.Left) return dir.Rotated(Mathf.DegToRad(-270));
+            else if (ParentMap.Gravity == Vector2.Up) return dir.Rotated(Mathf.DegToRad(-180));
+            else if (ParentMap.Gravity == Vector2.Right) return dir.Rotated(Mathf.DegToRad(270));
+        }
+
+        return dir;
     }
 
     private void CamRotate(int degrees)
     {
         var tween = CreateTween();
+        var tween2 = CreateTween();
+
         tween.Finished += () => ParentMap.UpdateRotation(degrees);
+
+        tween2
+            .TweenProperty(GetNode<Sprite2D>("Sprite"),
+            "rotation",
+            Cam.Rotation + Mathf.DegToRad(degrees),
+            0.2f);
 
         tween
             .TweenProperty(Cam,
             "rotation",
             Cam.Rotation + Mathf.DegToRad(degrees),
             0.2f);
+
+        tween2.Play();
         tween.Play();
     }
 }

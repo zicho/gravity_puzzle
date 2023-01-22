@@ -1,10 +1,77 @@
-[gd_scene load_steps=8 format=3 uid="uid://dyb60w7krvuwj"]
+[gd_scene load_steps=12 format=3 uid="uid://dyb60w7krvuwj"]
 
+[ext_resource type="Texture2D" uid="uid://bxxduy32akckm" path="res://gfx/PNG/Ground/Stone/stoneMid.png" id="1_q4vux"]
 [ext_resource type="Texture2D" uid="uid://byp6sciiv0ei3" path="res://icon.svg" id="1_s2uxu"]
 [ext_resource type="PackedScene" uid="uid://d1rigmciwcjb1" path="res://player.tscn" id="2_2pimp"]
 [ext_resource type="Script" path="res://Map.cs" id="2_5jqja"]
+[ext_resource type="Texture2D" uid="uid://5l0hweejmye2" path="res://gfx/Spritesheet/spritesheet_stone.png" id="2_5q83k"]
 [ext_resource type="Script" path="res://Player.cs" id="3_nqenh"]
 [ext_resource type="PackedScene" uid="uid://drd12c4mcloft" path="res://box.tscn" id="5_a00dn"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bmfkv"]
+texture = ExtResource("1_q4vux")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eqvpm"]
+texture = ExtResource("2_5q83k")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+5:7/0 = 0
+6:7/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1v01m"]
 texture = ExtResource("1_s2uxu")
@@ -15,27 +82,51 @@ texture_region_size = Vector2i(128, 128)
 [sub_resource type="TileSet" id="TileSet_3nsi7"]
 tile_size = Vector2i(128, 128)
 sources/6 = SubResource("TileSetAtlasSource_1v01m")
+sources/0 = SubResource("TileSetAtlasSource_bmfkv")
+sources/1 = SubResource("TileSetAtlasSource_eqvpm")
 
-[node name="Node2D" type="TileMap"]
-position = Vector2(64, 64)
+[node name="Root" type="Node2D"]
+
+[node name="Map" type="TileMap" parent="."]
+position = Vector2(640.05, 512.04)
 tile_set = SubResource("TileSet_3nsi7")
 format = 2
-layer_0/tile_data = PackedInt32Array(0, 6, 0, 65536, 6, 0, 131072, 6, 0, 1, 6, 0, 2, 6, 0, 3, 6, 0, 65540, 6, 0, 131076, 6, 0, 4, 6, 0, 196608, 6, 0, 262144, 6, 0, 327680, 6, 0, 393216, 6, 0, 458752, 6, 0, 458753, 6, 0, 458754, 6, 0, 458755, 6, 0, 458756, 6, 0, 458760, 6, 0, 458761, 6, 0, 458762, 6, 0, 458757, 6, 0, 458758, 6, 0, 458759, 6, 0, 458763, 6, 0, 458764, 6, 0, 458765, 6, 0, 393229, 6, 0, 327693, 6, 0, 262157, 6, 0, 131085, 6, 0, 131084, 6, 0, 196621, 6, 0, 131083, 6, 0, 131082, 6, 0, 131081, 6, 0, 131080, 6, 0, 131079, 6, 0, 131078, 6, 0, 131077, 6, 0)
+layer_0/tile_data = PackedInt32Array(0, 6, 0, 65536, 6, 0, 131072, 6, 0, 1, 6, 0, 2, 6, 0, 3, 6, 0, 4, 6, 0, 196608, 6, 0, 262144, 6, 0, 327680, 6, 0, 393216, 6, 0, 458752, 6, 0, 458753, 6, 0, 458754, 6, 0, 458755, 6, 0, 458756, 6, 0, 458760, 6, 0, 458761, 6, 0, 458762, 6, 0, 458757, 6, 0, 458758, 6, 0, 458759, 6, 0, 458763, 6, 0, 458764, 6, 0, 458765, 6, 0, 393229, 6, 0, 327693, 6, 0, 262157, 6, 0, 131085, 6, 0, 131084, 6, 0, 196621, 6, 0, 131083, 6, 0, 131082, 6, 0, 131081, 6, 0, 393217, 6, 0, 327681, 6, 0, 327682, 6, 0, 327683, 6, 0, 393219, 6, 0, 393218, 6, 0, 393220, 6, 0, 393221, 6, 0, 262145, 6, 0, 262146, 6, 0, 262147, 6, 0, 5, 6, 0, 6, 6, 0, 7, 6, 0, 8, 6, 0, 9, 6, 0, 65545, 6, 0, 327684, 6, 0, 327685, 6, 0, 327686, 6, 0, 393222, 6, 0, 393223, 6, 0, 393224, 6, 0, 262148, 6, 0)
 script = ExtResource("2_5jqja")
 
-[node name="Player" parent="." instance=ExtResource("2_2pimp")]
-position = Vector2(192.02, 832.07)
+[node name="GravityLabel" type="Label" parent="Map"]
+visible = false
+offset_left = -151.577
+offset_top = -151.577
+offset_right = -76.577
+offset_bottom = -125.577
+scale = Vector2(3, 3)
+text = "GRAVITY: "
+uppercase = true
+metadata/_edit_lock_ = true
+
+[node name="Player" parent="Map" instance=ExtResource("2_2pimp")]
+position = Vector2(192.02, 448.04)
 script = ExtResource("3_nqenh")
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="Map/Player"]
 position = Vector2(-128, -128)
 ignore_rotation = false
 current = true
 zoom = Vector2(0.25, 0.25)
 limit_smoothed = true
 
-[node name="Box" parent="." instance=ExtResource("5_a00dn")]
-position = Vector2(192.02, 192.02)
+[node name="Box" parent="Map" instance=ExtResource("5_a00dn")]
+position = Vector2(704.06, 322.03)
 
-[node name="Box2" parent="." instance=ExtResource("5_a00dn")]
-position = Vector2(448.07, 832.13)
+[node name="Box2" parent="Map" instance=ExtResource("5_a00dn")]
+position = Vector2(960.08, 322.03)
+
+[node name="Box3" parent="Map" instance=ExtResource("5_a00dn")]
+position = Vector2(960.08, 448.04)
+
+[node name="Box4" parent="Map" instance=ExtResource("5_a00dn")]
+position = Vector2(704.06, 450.04)
+
+[node name="Box5" parent="Map" instance=ExtResource("5_a00dn")]
+position = Vector2(320.03, 450.04)

@@ -15,6 +15,8 @@ public partial class Map : TileMap
 
     public Vector2 Gravity;
 
+    public Label GravityLabel { get; private set; }
+
     public List<Vector2i> UsedTiles;
 
     private int _selectedGravity = 0;
@@ -35,7 +37,8 @@ public partial class Map : TileMap
         UsedTiles = GetUsedCells(0).ToList();
         Gravity = Gravities[_selectedGravity];
 
-        GD.Print(UsedTiles.Count);
+        GravityLabel = GetNode<Label>("GravityLabel");
+        GravityLabel.Text = "Gravity: Down";
 
         Entities =
             GetTree().GetNodesInGroup("gravitons").Cast<EntityBase>().ToList();
@@ -50,7 +53,6 @@ public partial class Map : TileMap
     {
         if (Entities.All(x => !x.CanFall))
         {
-            GD.Print("None can move");
             Player.Controllable = true;
         }
         else
@@ -78,6 +80,24 @@ public partial class Map : TileMap
             _selectedGravity = Gravities.Length - 1;
 
         Gravity = Gravities[_selectedGravity];
+
+
+
+        switch (Gravity)
+        {
+            case Vector2 v when v.Equals(Vector2.Down):
+                GravityLabel.Text = "Gravity: Down";
+                break;
+            case Vector2 v when v.Equals(Vector2.Right):
+                GravityLabel.Text = "Gravity: Right";
+                break;
+            case Vector2 v when v.Equals(Vector2.Up):
+                GravityLabel.Text = "Gravity: Up";
+                break;
+            case Vector2 v when v.Equals(Vector2.Left):
+                GravityLabel.Text = "Gravity: Left";
+                break;
+        }
 
         TickTimer.Start();
     }

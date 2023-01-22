@@ -86,8 +86,6 @@ public abstract partial class EntityBase : Node2D
 
         var tileIsEmpty = ParentMap.GetCellSourceId(0, coords) == -1;
 
-        GD.Print(tileIsEmpty);
-
         if (tileIsEmpty)
         {
             var checkForEntity = ParentMap.Entities.Find(x => x.MapPosition == coords);
