@@ -31,6 +31,10 @@ public partial class Map : TileMap
     public Timer TickTimer { get; set; } = new Timer();
     public EventHandler OnTickEventHandler { get; set; }
     public EventHandler OnGravCheckFinishedEventHandler { get; set; }
+    
+    // NOTE: ENTITY HAS MOVED IS ONLY USED TOP KEEP TRACK OF IF ANY ENTITET HAS MOVED DURING A "TICK"
+    // IT'S A HACK TO DETERMINE IF A SOUND NEEDS TO BE PLAYED!
+    public bool AnyEntityHasMovedThisTick { get;  set; }
 
     public override void _Ready()
     {
@@ -54,11 +58,19 @@ public partial class Map : TileMap
         if (Entities.All(x => !x.CanFall))
         {
             Player.Controllable = true;
+
+            if(AnyEntityHasMovedThisTick) {
+                SoundPlayer.PlaySound("land");
+                AnyEntityHasMovedThisTick = false;
+            }
+
+            TickTimer.Stop();
         }
         else
         {
             Player.Controllable = false;
             OnTickEventHandler.Invoke(this, null);
+            SoundPlayer.PlaySound("fall");
         }
     }
 
@@ -80,8 +92,6 @@ public partial class Map : TileMap
             _selectedGravity = Gravities.Length - 1;
 
         Gravity = Gravities[_selectedGravity];
-
-
 
         switch (Gravity)
         {

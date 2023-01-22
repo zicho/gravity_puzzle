@@ -48,6 +48,7 @@ public abstract partial class EntityBase : Node2D
 
     public void Fall()
     {
+        ParentMap.AnyEntityHasMovedThisTick = true;
         var newPos = ParentMap.LocalToMap(Position) + ParentMap.Gravity;
 
         // Position = ParentMap.MapToLocal((Vector2i) newPos);
@@ -62,13 +63,18 @@ public abstract partial class EntityBase : Node2D
         tween.Play();
     }
 
-    public void Move(Vector2 direction)
+    public virtual void Move(Vector2 direction)
     {
         var newPos = ParentMap.LocalToMap(Position) + direction;
 
         if (CheckDirection(newPos))
         {
             var tween = CreateTween();
+
+            // HACK?
+            if(this is Player) {
+                SoundPlayer.PlaySound("step");
+            }
 
             tween
                 .TweenProperty(this,

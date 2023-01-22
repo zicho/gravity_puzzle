@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://ylqssdihpabi"]
+
+[ext_resource type="Script" path="res://SoundLibrary.cs" id="1_epii6"]
+[ext_resource type="AudioStream" uid="uid://dyknsoxfnthbi" path="res://sfx/camera_swoosh.wav" id="2_qlmcr"]
+[ext_resource type="AudioStream" uid="uid://bbqkkr7a5ymc6" path="res://sfx/falling.wav" id="3_nat03"]
+[ext_resource type="AudioStream" uid="uid://866jyper8018" path="res://sfx/land.wav" id="4_k0d0l"]
+[ext_resource type="AudioStream" uid="uid://bgq417mwmwyr2" path="res://sfx/step.wav" id="5_5jtre"]
+
+[node name="SoundLibrary" type="Node"]
+script = ExtResource("1_epii6")
+
+[node name="swoosh" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_qlmcr")
+
+[node name="fall" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_nat03")
+
+[node name="land" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_k0d0l")
+
+[node name="step" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_5jtre")

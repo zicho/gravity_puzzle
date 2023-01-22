@@ -1,4 +1,5 @@
 using System;
+using Core;
 using Godot;
 
 namespace Entities;
@@ -34,11 +35,13 @@ public partial class Player : EntityBase
 
             if (Input.IsActionJustPressed("move_left"))
             {
+                Controllable = false;
                 Move(GetGravityNeutralDirection(Vector2.Left));
             }
 
             if (Input.IsActionJustPressed("move_right"))
             {
+                Controllable = false;
                 Move(GetGravityNeutralDirection(Vector2.Right));
             }
         }
@@ -64,6 +67,8 @@ public partial class Player : EntityBase
 
     private void CamRotate(int degrees)
     {
+        SoundPlayer.PlaySound("swoosh");
+
         var tween = CreateTween();
         var tween2 = CreateTween();
 
@@ -83,5 +88,10 @@ public partial class Player : EntityBase
 
         tween2.Play();
         tween.Play();
+    }
+
+    public override void  Move(Vector2 direction) {
+        base.Move(direction);
+        ParentMap.TickTimer.Start();
     }
 }
