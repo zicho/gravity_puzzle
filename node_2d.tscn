@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://pl2t3f1wx5a6"]
+
+[ext_resource type="Texture2D" uid="uid://byp6sciiv0ei3" path="res://icon.svg" id="1_evg6b"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1v01m"]
+texture = ExtResource("1_evg6b")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/modulate = Color(0, 0, 0, 1)
+
+[sub_resource type="TileSet" id="TileSet_3nsi7"]
+tile_size = Vector2i(128, 128)
+sources/6 = SubResource("TileSetAtlasSource_1v01m")
+
+[node name="Node2D" type="TileMap"]
+tile_set = SubResource("TileSet_3nsi7")
+format = 2
+layer_0/tile_data = PackedInt32Array(262144, 6, 0, 262145, 6, 0, 262146, 6, 0, 262147, 6, 0, 262148, 6, 0, 262149, 6, 0, 262150, 6, 0, 262151, 6, 0, 262152, 6, 0, 0, 6, 0, 65536, 6, 0, 131072, 6, 0, 196608, 6, 0, 1, 6, 0, 2, 6, 0, 3, 6, 0, 4, 6, 0, 5, 6, 0, 6, 6, 0, 7, 6, 0, 8, 6, 0, 65544, 6, 0, 131080, 6, 0, 196616, 6, 0)
