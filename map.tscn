@@ -19,7 +19,6 @@ sources/6 = SubResource("TileSetAtlasSource_tyr1m")
 [node name="Root" type="Node2D"]
 
 [node name="Map" type="TileMap" parent="."]
-position = Vector2(640.05, 512.04)
 tile_set = SubResource("TileSet_5gck6")
 format = 2
 layer_0/tile_data = PackedInt32Array(0, 6, 0, 65536, 6, 0, 131072, 6, 0, 1, 6, 0, 2, 6, 0, 3, 6, 0, 4, 6, 0, 327680, 6, 0, 393216, 6, 0, 458752, 6, 0, 458753, 6, 0, 458754, 6, 0, 458755, 6, 0, 458756, 6, 0, 458760, 6, 0, 458761, 6, 0, 458762, 6, 0, 458757, 6, 0, 458758, 6, 0, 458759, 6, 0, 458763, 6, 0, 458764, 6, 0, 458765, 6, 0, 393229, 6, 0, 327693, 6, 0, 262157, 6, 0, 131085, 6, 0, 131084, 6, 0, 196621, 6, 0, 131083, 6, 0, 131082, 6, 0, 131081, 6, 0, 393217, 6, 0, 327681, 6, 0, 327682, 6, 0, 327683, 6, 0, 393219, 6, 0, 393218, 6, 0, 393220, 6, 0, 393221, 6, 0, 262147, 6, 0, 5, 6, 0, 6, 6, 0, 7, 6, 0, 8, 6, 0, 9, 6, 0, 65545, 6, 0, 327684, 6, 0, 327685, 6, 0, 327686, 6, 0, 393222, 6, 0, 393223, 6, 0, 393224, 6, 0, 262148, 6, 0, 196608, 6, 0, 262144, 6, 0, 262145, 6, 0, 262146, 6, 0)
@@ -37,7 +36,7 @@ uppercase = true
 metadata/_edit_lock_ = true
 
 [node name="Player" parent="Map" instance=ExtResource("2_2pimp")]
-position = Vector2(192.02, 448.04)
+position = Vector2(192, 448)
 script = ExtResource("3_nqenh")
 
 [node name="Camera2D" type="Camera2D" parent="Map/Player"]
@@ -48,18 +47,18 @@ zoom = Vector2(0.25, 0.25)
 limit_smoothed = true
 
 [node name="Box" parent="Map" instance=ExtResource("5_a00dn")]
-position = Vector2(704.06, 322.03)
+position = Vector2(320, 448)
 
 [node name="Box2" parent="Map" instance=ExtResource("5_a00dn")]
-position = Vector2(960.08, 322.03)
+position = Vector2(704, 448)
 
 [node name="Box3" parent="Map" instance=ExtResource("5_a00dn")]
-position = Vector2(960.08, 448.04)
+position = Vector2(704, 576)
 
 [node name="Box4" parent="Map" instance=ExtResource("5_a00dn")]
-position = Vector2(704.06, 450.04)
+position = Vector2(576, 448)
 
 [node name="Box5" parent="Map" instance=ExtResource("5_a00dn")]
-position = Vector2(320.03, 450.04)
+position = Vector2(448, 448)
 
 [node name="SFX_Library" parent="." instance=ExtResource("6_58pmc")]

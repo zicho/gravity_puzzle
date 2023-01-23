@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Core;
 using Godot;
 
@@ -36,15 +38,77 @@ public partial class Player : EntityBase
             if (Input.IsActionJustPressed("move_left"))
             {
                 Controllable = false;
-                Move(GetGravityNeutralDirection(Vector2.Left));
+                MoveWithPush(GetGravityNeutralDirection(Vector2.Left));
             }
 
             if (Input.IsActionJustPressed("move_right"))
             {
                 Controllable = false;
-                Move(GetGravityNeutralDirection(Vector2.Right));
+                MoveWithPush(GetGravityNeutralDirection(Vector2.Right));
             }
         }
+    }
+
+    private void MoveWithPush(Vector2 gravityNeutralDirection)
+    {
+        var posToCheck = (Vector2i)MapPosition + (Vector2i)gravityNeutralDirection;
+
+        bool collisionCheck = true;
+        var affectedEntities = new List<EntityBase>();
+
+        while (collisionCheck)
+        {
+            var entity = ParentMap.GetEntityAtTile(posToCheck);
+            if (entity != null)
+            {
+                affectedEntities.Add(entity);
+                posToCheck += (Vector2i)gravityNeutralDirection;
+            }
+            else
+            {
+                collisionCheck = false;
+            }
+        }
+
+        if (affectedEntities.Count == 0)
+        {
+            Move(gravityNeutralDirection);
+        }
+        else
+        {
+
+            var lastEntity = affectedEntities.Last();
+            var allCanMove = false;
+
+            if (lastEntity?.CheckDirection(
+                (Vector2i)lastEntity.MapPosition + (Vector2i)gravityNeutralDirection
+            ) == true)
+            {
+                allCanMove = true;
+            } else {
+                Move(gravityNeutralDirection);
+            }
+
+            if (allCanMove)
+            {
+                foreach (var ent in affectedEntities)
+                {
+                    ent.Move(gravityNeutralDirection, true);
+                }
+
+                Move(gravityNeutralDirection, true);
+            }
+        }
+
+        // var entity = ParentMap.GetEntityAtTile(posToCheck);
+        // if (entity != null)
+        // {
+        //     entity.Move(gravityNeutralDirection);
+        //     Move(gravityNeutralDirection, true);
+        // } else {
+        //     Move(gravityNeutralDirection);
+        // }
+
     }
 
     private Vector2 GetGravityNeutralDirection(Vector2 dir)
@@ -56,7 +120,8 @@ public partial class Player : EntityBase
             else if (ParentMap.Gravity == Vector2.Right) return dir.Rotated(Mathf.DegToRad(-90));
         }
 
-        if (dir == Vector2.Right && ParentMap.Gravity != Vector2.Down) {
+        if (dir == Vector2.Right && ParentMap.Gravity != Vector2.Down)
+        {
             if (ParentMap.Gravity == Vector2.Left) return dir.Rotated(Mathf.DegToRad(-270));
             else if (ParentMap.Gravity == Vector2.Up) return dir.Rotated(Mathf.DegToRad(-180));
             else if (ParentMap.Gravity == Vector2.Right) return dir.Rotated(Mathf.DegToRad(270));
@@ -90,8 +155,9 @@ public partial class Player : EntityBase
         tween.Play();
     }
 
-    public override void  Move(Vector2 direction) {
-        base.Move(direction);
+    public override void Move(Vector2 direction, bool force = false)
+    {
+        base.Move(direction, force);
         ParentMap.TickTimer.Start();
     }
 }

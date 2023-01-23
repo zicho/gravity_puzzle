@@ -111,4 +111,7 @@ public partial class Map : TileMap
 
         TickTimer.Start();
     }
+
+    public EntityBase GetEntityAtTile(Vector2i coords)
+        => Entities.Find(x => x.MapPosition == coords);
 }

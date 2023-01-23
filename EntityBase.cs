@@ -63,11 +63,11 @@ public abstract partial class EntityBase : Node2D
         tween.Play();
     }
 
-    public virtual void Move(Vector2 direction)
+    public virtual void Move(Vector2 direction, bool force = false)
     {
         var newPos = ParentMap.LocalToMap(Position) + direction;
 
-        if (CheckDirection(newPos))
+        if (CheckDirection(newPos) || force)
         {
             var tween = CreateTween();
 
@@ -86,7 +86,7 @@ public abstract partial class EntityBase : Node2D
         }
     }
 
-    private bool CheckDirection(Vector2 newPos)
+    public bool CheckDirection(Vector2 newPos)
     {
         var coords = new Vector2i((int)newPos.x, (int)newPos.y);
 
