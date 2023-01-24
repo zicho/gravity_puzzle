@@ -10,12 +10,15 @@ public partial class Player : EntityBase
 {
     public Camera2D Cam => GetNode<Camera2D>("Camera2D");
 
+    public AnimationPlayer AnimationPlayer { get; private set; }
+
     public bool Controllable;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         base._Ready();
+        AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -27,6 +30,12 @@ public partial class Player : EntityBase
             {
                 Controllable = false;
                 CamRotate(90);
+            }
+
+            if (Input.IsActionJustPressed("rotate_left"))
+            {
+                Controllable = false;
+                CamRotate(-90);
             }
 
             if (Input.IsActionJustPressed("rotate_left"))
@@ -76,7 +85,6 @@ public partial class Player : EntityBase
         }
         else
         {
-
             var lastEntity = affectedEntities.Last();
             var allCanMove = false;
 
