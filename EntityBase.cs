@@ -97,10 +97,15 @@ public abstract partial class EntityBase : Node2D
                 ParentMap.MapToLocal((Vector2i)newPos),
                 0.1f)
                 .SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.In);
+
+            tween.Finished += () => Moving = false;
+
             tween.Play();
 
             if (this is IGlider && CheckDirection(newPos))
             {
+                
+
                 tween.Finished += () =>
                 {
                     if (!CanFall)
@@ -110,15 +115,10 @@ public abstract partial class EntityBase : Node2D
                     else
                     {
                         ParentMap.TickTimer.Start();
+                        Moving = false;
                     }
                 };
             }
-            else
-            {
-                Moving = false;
-            }
-
-
         }
     }
 
@@ -132,7 +132,7 @@ public abstract partial class EntityBase : Node2D
         {
             var checkEntity = ParentMap.GetEntityAtTile(coords);
             if (checkEntity == null) return true;
-            if (checkEntity != null) return checkEntity.CanFall;// || checkEntity is IGlider;
+            if (checkEntity != null) return checkEntity.CanFall || checkEntity is IGlider;
         }
 
         return tileIsEmpty;

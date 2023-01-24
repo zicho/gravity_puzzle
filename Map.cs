@@ -57,8 +57,6 @@ public partial class Map : TileMap
     {
         if (Entities.All(x => !x.CanFall))
         {
-            Player.Controllable = true;
-
             if(AnyEntityHasMovedThisTick) {
                 SoundPlayer.PlaySound("land");
                 AnyEntityHasMovedThisTick = false;
@@ -68,7 +66,6 @@ public partial class Map : TileMap
         }
         else
         {
-            Player.Controllable = false;
             OnTickEventHandler.Invoke(this, null);
             SoundPlayer.PlaySound("fall");
         }
@@ -77,6 +74,7 @@ public partial class Map : TileMap
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
+        Player.Controllable = Entities.All(x => !x.CanFall && !x.Moving);
     }
 
     public void UpdateRotation(int degrees)

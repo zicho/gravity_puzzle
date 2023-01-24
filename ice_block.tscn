@@ -16,3 +16,15 @@ color = Color(0.419608, 0.270588, 0.0627451, 1)
 
 [node name="BoxCrate" type="Sprite2D" parent="."]
 texture = ExtResource("2_vr3k3")
+
+[node name="Up" type="RayCast2D" parent="."]
+target_position = Vector2(0, -128)
+
+[node name="Right" type="RayCast2D" parent="."]
+target_position = Vector2(128, 0)
+
+[node name="Down" type="RayCast2D" parent="."]
+target_position = Vector2(0, 128)
+
+[node name="Left" type="RayCast2D" parent="."]
+target_position = Vector2(-128, 0)
