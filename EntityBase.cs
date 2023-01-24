@@ -19,7 +19,9 @@ public abstract partial class EntityBase : Node2D
         {
             AddToGroup("gravitons");
             ParentMap.OnTickEventHandler += OnTickHappened;
-        } else {
+        }
+        else
+        {
             Modulate = new Color("#79797974");
         }
     }
@@ -33,6 +35,8 @@ public abstract partial class EntityBase : Node2D
     }
 
     public bool CanFall => DetermineMovement();
+
+    public bool Moving { get; set; }
 
     private bool DetermineMovement()
     {
@@ -76,6 +80,8 @@ public abstract partial class EntityBase : Node2D
 
         if (CheckDirection(newPos) || force)
         {
+            Moving = true;
+
             var tween = CreateTween();
 
             // HACK?
@@ -92,6 +98,27 @@ public abstract partial class EntityBase : Node2D
                 0.1f)
                 .SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.In);
             tween.Play();
+
+            if (this is IGlider && CheckDirection(newPos))
+            {
+                tween.Finished += () =>
+                {
+                    if (!CanFall)
+                    {
+                        Move(direction);
+                    }
+                    else
+                    {
+                        ParentMap.TickTimer.Start();
+                    }
+                };
+            }
+            else
+            {
+                Moving = false;
+            }
+
+
         }
     }
 
@@ -105,7 +132,7 @@ public abstract partial class EntityBase : Node2D
         {
             var checkEntity = ParentMap.GetEntityAtTile(coords);
             if (checkEntity == null) return true;
-            if (checkEntity != null) return checkEntity.CanFall;
+            if (checkEntity != null) return checkEntity.CanFall;// || checkEntity is IGlider;
         }
 
         return tileIsEmpty;

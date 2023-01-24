@@ -38,12 +38,6 @@ public partial class Player : EntityBase
                 CamRotate(-90);
             }
 
-            if (Input.IsActionJustPressed("rotate_left"))
-            {
-                Controllable = false;
-                CamRotate(-90);
-            }
-
             if (Input.IsActionJustPressed("move_left"))
             {
                 Controllable = false;
@@ -77,6 +71,10 @@ public partial class Player : EntityBase
             {
                 collisionCheck = false;
             }
+        }
+
+        if(affectedEntities.Any() && affectedEntities.All(x => x is IGlider)) {
+            SoundPlayer.PlaySound("ice_glide");
         }
 
         if (affectedEntities.Count == 0)

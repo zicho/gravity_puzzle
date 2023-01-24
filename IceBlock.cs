@@ -3,7 +3,7 @@ using System;
 
 
 namespace Entities;
-public partial class IceBlock : EntityBase
+public partial class IceBlock : EntityBase, IGlider
 {
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -15,28 +15,4 @@ public partial class IceBlock : EntityBase
     public override void _Process(double delta)
     {
     }
-
-    public override void Move(Vector2 direction, bool force = false)
-    {
-        var newPos = ParentMap.LocalToMap(Position) + direction;
-        bool keepMoving = true;
-
-        while (keepMoving)
-        {
-            if (CheckDirection(newPos) || force)
-            {
-                var tween = CreateTween();
-                tween
-                    .TweenProperty(this,
-                    "position",
-                    ParentMap.MapToLocal((Vector2i)newPos),
-                    0.1f)
-                    .SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.In);
-                tween.Play();
-            } else {
-				keepMoving = false;
-			}
-        }
-    }
-
 }
