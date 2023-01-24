@@ -28,25 +28,21 @@ public partial class Player : EntityBase
         {
             if (Input.IsActionJustPressed("rotate_right"))
             {
-                Controllable = false;
                 CamRotate(90);
             }
 
             if (Input.IsActionJustPressed("rotate_left"))
             {
-                Controllable = false;
                 CamRotate(-90);
             }
 
-            if (Input.IsActionJustPressed("move_left"))
+            if (Input.IsActionJustPressed("move_left") && !Moving)
             {
-                Controllable = false;
                 MoveWithPush(GetGravityNeutralDirection(Vector2.Left));
             }
 
-            if (Input.IsActionJustPressed("move_right"))
+            if (Input.IsActionJustPressed("move_right") && !Moving)
             {
-                Controllable = false;
                 MoveWithPush(GetGravityNeutralDirection(Vector2.Right));
             }
         }
@@ -73,9 +69,9 @@ public partial class Player : EntityBase
             }
         }
 
-        if(affectedEntities.Any() && affectedEntities.All(x => x is IGlider)) {
-            SoundPlayer.PlaySound("ice_glide");
-        }
+        // if(affectedEntities.Any() && affectedEntities.All(x => x is IGlider)) {
+        //     SoundPlayer.PlaySound("ice_glide");
+        // }
 
         if (affectedEntities.Count == 0)
         {
