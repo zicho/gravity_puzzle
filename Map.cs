@@ -35,6 +35,7 @@ public partial class Map : TileMap
     // NOTE: ENTITY HAS MOVED IS ONLY USED TOP KEEP TRACK OF IF ANY ENTITET HAS MOVED DURING A "TICK"
     // IT'S A HACK TO DETERMINE IF A SOUND NEEDS TO BE PLAYED!
     public bool AnyEntityHasMovedThisTick { get;  set; }
+    public bool PlayerControl { get; set; }
 
     public override void _Ready()
     {
@@ -47,36 +48,37 @@ public partial class Map : TileMap
         Entities =
             GetTree().GetNodesInGroup("gravitons").Cast<EntityBase>().ToList();
 
-        TickTimer.Connect("timeout", new Callable(this, nameof(OnTick)));
-        TickTimer.WaitTime = 0.2f;
-        AddChild(TickTimer);
-        TickTimer.Start();
+        // TickTimer.Connect("timeout", new Callable(this, nameof(OnTick)));
+        // TickTimer.WaitTime = 0.2f;
+        // AddChild(TickTimer);
+        // TickTimer.Start();
     }
 
-    private void OnTick()
-    {
-        if (Entities.All(x => !x.CanFall))
-        {
-            Player.Controllable = true;
+    // private void OnTick()
+    // {
+    //     if (Entities.All(x => !x.CanFall))
+    //     {
+    //         Player.Controllable = true;
 
-            if(AnyEntityHasMovedThisTick) {
-                SoundPlayer.PlaySound("land");
-                AnyEntityHasMovedThisTick = false;
-            }
+    //         if(AnyEntityHasMovedThisTick) {
+    //             SoundPlayer.PlaySound("land");
+    //             AnyEntityHasMovedThisTick = false;
+    //         }
 
-            TickTimer.Stop();
-        }
-        else
-        {
-            Player.Controllable = false;
-            OnTickEventHandler.Invoke(this, null);
-            SoundPlayer.PlaySound("fall");
-        }
-    }
+    //         TickTimer.Stop();
+    //     }
+    //     else
+    //     {
+    //         Player.Controllable = false;
+    //         OnTickEventHandler.Invoke(this, null);
+    //         SoundPlayer.PlaySound("fall");
+    //     }
+    // }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
+        PlayerControl = Entities.All(x => !x.CanFall);
     }
 
     public void UpdateRotation(int degrees)
@@ -109,9 +111,9 @@ public partial class Map : TileMap
                 break;
         }
 
-        TickTimer.Start();
+        // TickTimer.Start();
     }
 
     public EntityBase GetEntityAtTile(Vector2i coords)
-        => Entities.Find(x => x.MapPosition == coords);
+    => Entities.Find(x => x.MapPosition == coords);
 }

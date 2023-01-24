@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://dyb60w7krvuwj"]
+[gd_scene load_steps=9 format=3 uid="uid://dyb60w7krvuwj"]
 
 [ext_resource type="Texture2D" uid="uid://cn3hxbkh6tg3s" path="res://gfx/block_07.png" id="1_sts1c"]
 [ext_resource type="PackedScene" uid="uid://d1rigmciwcjb1" path="res://player.tscn" id="2_2pimp"]
 [ext_resource type="Script" path="res://Map.cs" id="2_5jqja"]
-[ext_resource type="Script" path="res://Player.cs" id="3_nqenh"]
 [ext_resource type="PackedScene" uid="uid://drd12c4mcloft" path="res://box.tscn" id="5_a00dn"]
 [ext_resource type="PackedScene" uid="uid://ylqssdihpabi" path="res://sfx_library.tscn" id="6_58pmc"]
 [ext_resource type="PackedScene" uid="uid://bn22rwxyrhajo" path="res://ice_block.tscn" id="6_ifj67"]
@@ -38,7 +37,6 @@ metadata/_edit_lock_ = true
 
 [node name="Player" parent="Map" instance=ExtResource("2_2pimp")]
 position = Vector2(192, 832)
-script = ExtResource("3_nqenh")
 
 [node name="Camera2D" type="Camera2D" parent="Map/Player"]
 position = Vector2(-128, -128)
@@ -55,6 +53,7 @@ position = Vector2(1344, 576)
 
 [node name="Box3" parent="Map" instance=ExtResource("5_a00dn")]
 position = Vector2(1472, 448)
+scale = Vector2(0.991891, 0.967866)
 
 [node name="Box4" parent="Map" instance=ExtResource("5_a00dn")]
 position = Vector2(1472, 576)
@@ -63,7 +62,11 @@ position = Vector2(1472, 576)
 position = Vector2(1600, 832)
 
 [node name="IceBlock" parent="Map" instance=ExtResource("6_ifj67")]
-position = Vector2(1344, 192)
-Active = false
+position = Vector2(448, 832)
+scale = Vector2(1.09998, 1.01802)
+
+[node name="IceBlock2" parent="Map" instance=ExtResource("6_ifj67")]
+position = Vector2(704, 832)
+scale = Vector2(1.09998, 1.01802)
 
 [node name="SFX_Library" parent="." instance=ExtResource("6_58pmc")]

@@ -14,5 +14,5 @@ offset_right = 64.0
 offset_bottom = 64.0
 color = Color(0.419608, 0.270588, 0.0627451, 1)
 
-[node name="BoxCrate" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_wys70")

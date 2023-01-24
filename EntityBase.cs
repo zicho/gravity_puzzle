@@ -12,14 +12,17 @@ public abstract partial class EntityBase : Node2D
 
     [Export]
     private bool Active = true;
+    private bool _adjustPosition;
 
     public override void _Ready()
     {
         if (Active)
         {
             AddToGroup("gravitons");
-            ParentMap.OnTickEventHandler += OnTickHappened;
-        } else {
+            // ParentMap.OnTickEventHandler += OnTickHappened;
+        }
+        else
+        {
             Modulate = new Color("#79797974");
         }
     }
@@ -29,6 +32,60 @@ public abstract partial class EntityBase : Node2D
         if (CanFall)
         {
             Fall();
+        }
+    }
+
+    public Rect2 GetSpriteRect() => GetNode<Sprite2D>("Sprite").GetRect();
+
+    public bool AllIsWithinBounds()
+    {
+        var rect = GetSpriteRect();
+
+        var edge = new Vector2i(
+                        (int)GlobalPosition.x + (int)rect.Size.x - 128,
+                        (int)GlobalPosition.y + (int)rect.Size.y - 128
+                        );
+
+        if (Name == "Box")
+        {
+            GD.Print(GlobalPosition);
+            GD.Print(edge);
+            GD.Print(ParentMap.LocalToMap((Vector2i)GlobalPosition) == ParentMap.LocalToMap(edge));
+            GD.Print("Edge: " + ParentMap.LocalToMap(edge));
+            GD.Print("Pos: " + ParentMap.LocalToMap((Vector2i)GlobalPosition));
+        }
+
+        return ParentMap.LocalToMap((Vector2i)GlobalPosition) == ParentMap.LocalToMap(edge);
+
+        // if (Name == "Box")
+        // {
+        //     GD.Print(ParentMap.LocalToMap((Vector2i)GlobalPosition));
+
+        //     var edge = new Vector2i(
+        //         (int)GlobalPosition.x + (int)rect.Size.x,
+        //         (int)GlobalPosition.y + (int)rect.Size.y
+        //         );
+
+        //     GD.Print(ParentMap.LocalToMap((Vector2i)GlobalPosition));
+        //     GD.Print(ParentMap.LocalToMap(edge));
+        // }
+
+        // return
+        //     ParentMap.MapToLocal((Vector2i)rect.Position) == MapPosition &&
+        //     ParentMap.MapToLocal((Vector2i)rect.End) == MapPosition;
+    }
+
+    public override void _Process(double delta)
+    {
+        if (!ParentMap.PlayerControl && CanFall)
+        {
+            _adjustPosition = true;
+            Position += ParentMap.Gravity * 32;
+        }
+
+        if(_adjustPosition && !CanFall) {
+            Position += ParentMap.Gravity * 32;
+            _adjustPosition = false;
         }
     }
 
@@ -47,7 +104,7 @@ public abstract partial class EntityBase : Node2D
         {
             var checkEntityBelow = ParentMap.GetEntityAtTile(coords);
             if (checkEntityBelow == null) return true;
-            if (checkEntityBelow != null) return checkEntityBelow.CanFall;
+            else return checkEntityBelow.CanFall;
         }
 
         return tileIsEmpty;

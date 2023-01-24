@@ -12,8 +12,6 @@ public partial class Player : EntityBase
 
     public AnimationPlayer AnimationPlayer { get; private set; }
 
-    public bool Controllable;
-
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
@@ -21,38 +19,33 @@ public partial class Player : EntityBase
         AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
     }
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
-        if (Controllable)
+        base._Process(delta);
+
+        if (ParentMap.PlayerControl)
         {
             if (Input.IsActionJustPressed("rotate_right"))
             {
-                Controllable = false;
+                ParentMap.PlayerControl = false;
                 CamRotate(90);
             }
 
             if (Input.IsActionJustPressed("rotate_left"))
             {
-                Controllable = false;
-                CamRotate(-90);
-            }
-
-            if (Input.IsActionJustPressed("rotate_left"))
-            {
-                Controllable = false;
+                ParentMap.PlayerControl = false;
                 CamRotate(-90);
             }
 
             if (Input.IsActionJustPressed("move_left"))
             {
-                Controllable = false;
+                ParentMap.PlayerControl = false;
                 MoveWithPush(GetGravityNeutralDirection(Vector2.Left));
             }
 
             if (Input.IsActionJustPressed("move_right"))
             {
-                Controllable = false;
+                ParentMap.PlayerControl = false;
                 MoveWithPush(GetGravityNeutralDirection(Vector2.Right));
             }
         }
@@ -93,7 +86,9 @@ public partial class Player : EntityBase
             ) == true)
             {
                 allCanMove = true;
-            } else {
+            }
+            else
+            {
                 Move(gravityNeutralDirection);
             }
 
@@ -107,16 +102,6 @@ public partial class Player : EntityBase
                 Move(gravityNeutralDirection, true);
             }
         }
-
-        // var entity = ParentMap.GetEntityAtTile(posToCheck);
-        // if (entity != null)
-        // {
-        //     entity.Move(gravityNeutralDirection);
-        //     Move(gravityNeutralDirection, true);
-        // } else {
-        //     Move(gravityNeutralDirection);
-        // }
-
     }
 
     private Vector2 GetGravityNeutralDirection(Vector2 dir)

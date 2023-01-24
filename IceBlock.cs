@@ -14,29 +14,28 @@ public partial class IceBlock : EntityBase
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
+        base._Process(delta);
     }
 
     public override void Move(Vector2 direction, bool force = false)
     {
         var newPos = ParentMap.LocalToMap(Position) + direction;
-        bool keepMoving = true;
 
-        while (keepMoving)
+        var canGlide = true;
+
+        if (CheckDirection(newPos) || force)
         {
-            if (CheckDirection(newPos) || force)
-            {
-                var tween = CreateTween();
-                tween
-                    .TweenProperty(this,
-                    "position",
-                    ParentMap.MapToLocal((Vector2i)newPos),
-                    0.1f)
-                    .SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.In);
-                tween.Play();
-            } else {
-				keepMoving = false;
-			}
+            var tween = CreateTween();
+
+            tween
+                .TweenProperty(this,
+                "position",
+                ParentMap.MapToLocal((Vector2i)newPos),
+                0.1f)
+                .SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.In);
+            tween.Play();
+
+			tween.Finished += () => Move(direction);
         }
     }
-
 }
