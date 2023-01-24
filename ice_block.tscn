@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bn22rwxyrhajo"]
+
+[ext_resource type="Script" path="res://IceBlock.cs" id="1_e6jkb"]
+[ext_resource type="Texture2D" uid="uid://d2leur1coal38" path="res://gfx/PNG/Tiles/water.png" id="2_vr3k3"]
+
+[node name="IceBlock" type="Node2D"]
+script = ExtResource("1_e6jkb")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+color = Color(0.419608, 0.270588, 0.0627451, 1)
+
+[node name="BoxCrate" type="Sprite2D" parent="."]
+texture = ExtResource("2_vr3k3")

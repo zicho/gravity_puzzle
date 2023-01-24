@@ -10,12 +10,20 @@ public abstract partial class EntityBase : Node2D
     public Map ParentMap => GetParent<Map>();
     public Vector2 MapPosition => ParentMap.LocalToMap(Position);
 
+    [Export]
+    private bool Active = true;
+
     public override void _Ready()
     {
-        AddToGroup("gravitons");
-
-        ParentMap.OnTickEventHandler += OnTickHappened;
+        if (Active)
+        {
+            AddToGroup("gravitons");
+            ParentMap.OnTickEventHandler += OnTickHappened;
+        } else {
+            Modulate = new Color("#79797974");
+        }
     }
+
     private void OnTickHappened(object sender, EventArgs e)
     {
         if (CanFall)
@@ -37,10 +45,9 @@ public abstract partial class EntityBase : Node2D
 
         if (tileIsEmpty)
         {
-            var checkEntityBelow = ParentMap.Entities.Find(x => x.MapPosition == coords);
+            var checkEntityBelow = ParentMap.GetEntityAtTile(coords);
             if (checkEntityBelow == null) return true;
-            if (checkEntityBelow?.CanFall == true) return true;
-            if (checkEntityBelow?.CanFall == false) return false;
+            if (checkEntityBelow != null) return checkEntityBelow.CanFall;
         }
 
         return tileIsEmpty;
@@ -72,8 +79,10 @@ public abstract partial class EntityBase : Node2D
             var tween = CreateTween();
 
             // HACK?
-            if(this is Player) {
+            if (this is Player player)
+            {
                 SoundPlayer.PlaySound("step");
+                player.AnimationPlayer.Play("step_right");
             }
 
             tween
@@ -94,10 +103,9 @@ public abstract partial class EntityBase : Node2D
 
         if (tileIsEmpty)
         {
-            var checkForEntity = ParentMap.Entities.Find(x => x.MapPosition == coords);
-            if (checkForEntity == null) return true;
-            if (checkForEntity?.CanFall == true) return true;
-            if (checkForEntity?.CanFall == false) return false;
+            var checkEntity = ParentMap.GetEntityAtTile(coords);
+            if (checkEntity == null) return true;
+            if (checkEntity != null) return checkEntity.CanFall;
         }
 
         return tileIsEmpty;

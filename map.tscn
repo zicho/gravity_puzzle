@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dyb60w7krvuwj"]
+[gd_scene load_steps=10 format=3 uid="uid://dyb60w7krvuwj"]
 
 [ext_resource type="Texture2D" uid="uid://cn3hxbkh6tg3s" path="res://gfx/block_07.png" id="1_sts1c"]
 [ext_resource type="PackedScene" uid="uid://d1rigmciwcjb1" path="res://player.tscn" id="2_2pimp"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Player.cs" id="3_nqenh"]
 [ext_resource type="PackedScene" uid="uid://drd12c4mcloft" path="res://box.tscn" id="5_a00dn"]
 [ext_resource type="PackedScene" uid="uid://ylqssdihpabi" path="res://sfx_library.tscn" id="6_58pmc"]
+[ext_resource type="PackedScene" uid="uid://bn22rwxyrhajo" path="res://ice_block.tscn" id="6_ifj67"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tyr1m"]
 texture = ExtResource("1_sts1c")
@@ -21,7 +22,7 @@ sources/6 = SubResource("TileSetAtlasSource_tyr1m")
 [node name="Map" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_5gck6")
 format = 2
-layer_0/tile_data = PackedInt32Array(0, 6, 0, 65536, 6, 0, 131072, 6, 0, 1, 6, 0, 2, 6, 0, 3, 6, 0, 4, 6, 0, 458752, 6, 0, 458753, 6, 0, 458754, 6, 0, 458755, 6, 0, 458756, 6, 0, 458760, 6, 0, 458761, 6, 0, 458762, 6, 0, 458757, 6, 0, 458758, 6, 0, 458759, 6, 0, 458763, 6, 0, 458764, 6, 0, 458765, 6, 0, 393229, 6, 0, 327693, 6, 0, 262157, 6, 0, 131085, 6, 0, 131084, 6, 0, 196621, 6, 0, 131083, 6, 0, 131082, 6, 0, 131081, 6, 0, 5, 6, 0, 6, 6, 0, 7, 6, 0, 8, 6, 0, 9, 6, 0, 65545, 6, 0, 196608, 6, 0, 262144, 6, 0, 327680, 6, 0, 393216, 6, 0, 393221, 6, 0)
+layer_0/tile_data = PackedInt32Array(0, 6, 0, 65536, 6, 0, 131072, 6, 0, 1, 6, 0, 2, 6, 0, 3, 6, 0, 4, 6, 0, 458752, 6, 0, 458753, 6, 0, 458754, 6, 0, 458755, 6, 0, 458756, 6, 0, 458760, 6, 0, 458761, 6, 0, 458762, 6, 0, 458757, 6, 0, 458758, 6, 0, 458759, 6, 0, 458763, 6, 0, 458764, 6, 0, 458765, 6, 0, 393229, 6, 0, 327693, 6, 0, 262157, 6, 0, 131085, 6, 0, 131084, 6, 0, 196621, 6, 0, 131083, 6, 0, 131082, 6, 0, 131081, 6, 0, 5, 6, 0, 6, 6, 0, 7, 6, 0, 8, 6, 0, 9, 6, 0, 65545, 6, 0, 196608, 6, 0, 262144, 6, 0, 327680, 6, 0, 393216, 6, 0, 65541, 6, 0, 393226, 6, 0, 327691, 6, 0, 393227, 6, 0)
 script = ExtResource("2_5jqja")
 
 [node name="GravityLabel" type="Label" parent="Map"]
@@ -36,7 +37,7 @@ uppercase = true
 metadata/_edit_lock_ = true
 
 [node name="Player" parent="Map" instance=ExtResource("2_2pimp")]
-position = Vector2(192, 448)
+position = Vector2(192, 832)
 script = ExtResource("3_nqenh")
 
 [node name="Camera2D" type="Camera2D" parent="Map/Player"]
@@ -47,18 +48,22 @@ zoom = Vector2(0.2, 0.2)
 limit_smoothed = true
 
 [node name="Box" parent="Map" instance=ExtResource("5_a00dn")]
-position = Vector2(320, 448)
+position = Vector2(1344, 704)
 
 [node name="Box2" parent="Map" instance=ExtResource("5_a00dn")]
-position = Vector2(1216, 576)
+position = Vector2(1344, 576)
 
 [node name="Box3" parent="Map" instance=ExtResource("5_a00dn")]
-position = Vector2(704, 576)
+position = Vector2(1472, 448)
 
 [node name="Box4" parent="Map" instance=ExtResource("5_a00dn")]
 position = Vector2(1472, 576)
 
 [node name="Box5" parent="Map" instance=ExtResource("5_a00dn")]
-position = Vector2(576, 448)
+position = Vector2(1600, 832)
+
+[node name="IceBlock" parent="Map" instance=ExtResource("6_ifj67")]
+position = Vector2(1344, 192)
+Active = false
 
 [node name="SFX_Library" parent="." instance=ExtResource("6_58pmc")]

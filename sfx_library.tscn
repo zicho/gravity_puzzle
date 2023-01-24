@@ -14,6 +14,7 @@ stream = ExtResource("2_qlmcr")
 
 [node name="fall" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_nat03")
+volume_db = -8.667
 
 [node name="land" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_k0d0l")
